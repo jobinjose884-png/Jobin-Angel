@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Jobin & Angel - Digital Wedding Invitation</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Custom Theme Variables and Responsive CSS -->
+    <style>
+        :root {
+            --primary-accent: #d4af37;
+            --rose-accent: #e8889c;
+            --bg-main: #12070e;
+            --glass-bg: rgba(255, 252, 248, 0.08);
+            --glass-border: rgba(212, 175, 55, 0.3);
+            --card-glow: rgba(232, 136, 156, 0.15);
+            --font-calligraphy: 'Alex Brush', cursive;
+            --font-subheading: 'Playfair Display', serif;
+            --font-body: 'Cormorant Garamond', serif;
+            --font-cinzel: 'Cinzel Decorative', serif;
+        }
+
+        /* Color Theme Presets */
+        body.theme-gold {
+            --primary-accent: #d4af37;
+            --rose-accent: #e8889c;
+            --bg-main: #12070e;
+            --glass-bg: rgba(255, 252, 248, 0.08);
+            --glass-border: rgba(212, 175, 55, 0.3);
+            --card-glow: rgba(212, 175, 55, 0.2);
+        }
+
+        body.theme-rose {
+            --primary-accent: #f43f5e;
+            --rose-accent: #fb7185;
+            --bg-main: #1c0a13;
+            --glass-bg: rgba(255, 241, 242, 0.08);
+            --glass-border: rgba(244, 63, 94, 0.3);
+            --card-glow: rgba(251, 113, 133, 0.25);
+        }
+
+        body.theme-emerald {
+            --primary-accent: #059669;
+            --rose-accent: #d4af37;
+            --bg-main: #022c22;
+            --glass-bg: rgba(236, 253, 245, 0.08);
+            --glass-border: rgba(212, 175, 55, 0.35);
+            --card-glow: rgba(5, 150, 105, 0.25);
+        }
+
+        body.theme-midnight {
+            --primary-accent: #3b82f6;
+            --rose-accent: #e2e8f0;
+            --bg-main: #0f172a;
+            --glass-bg: rgba(241, 245, 249, 0.08);
+            --glass-border: rgba(59, 130, 246, 0.35);
+            --card-glow: rgba(59, 130, 246, 0.25);
+        }
+
+        /* Font Family Styles */
+        body.font-mode-calligraphy {
+            --font-calligraphy: 'Great Vibes', cursive;
+        }
+
+        body.font-mode-modern {
+            --font-calligraphy: 'Montserrat', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-main);
+            color: #fceee9;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .font-calligraphy {
+            font-family: var(--font-calligraphy);
+        }
+
+        .font-subheading {
+            font-family: var(--font-subheading);
+        }
+
+        .font-body {
+            font-family: var(--font-body);
+        }
+
+        .font-cinzel {
+            font-family: var(--font-cinzel);
+        }
+
+        /* Gold Foil Shimmer */
+        .gold-shimmer {
+            background: linear-gradient(90deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c, #bf953f);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 6s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Responsive Glassmorphism Styling */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.02);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (min-width: 768px) {
+            .glass-card-hover:hover {
+                transform: translateY(-4px) scale(1.01);
+                border-color: var(--primary-accent);
+                box-shadow: 0 20px 40px var(--card-glow);
+            }
+        }
+
+        /* Pulse Ring Effect */
+        @keyframes ringPulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 16px rgba(212, 175, 55, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+            }
+        }
+
+        .pulse-ring {
+            animation: ringPulse 3s infinite;
+        }
+
+        /* Floating Animation */
+        @keyframes floatSlow {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(1deg);
+            }
+        }
+
+        .animate-float {
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+
+        /* Audio Visualizer Bars */
+        .visualizer-bar {
+            width: 3px;
+            background: var(--primary-accent);
+            border-radius: 3px;
+            animation: bounceBar 1.2s infinite ease-in-out alternate;
+        }
+
+        .visualizer-bar:nth-child(1) {
+            height: 8px;
+            animation-delay: 0.1s;
+        }
+
+        .visualizer-bar:nth-child(2) {
+            height: 18px;
+            animation-delay: 0.3s;
+        }
+
+        .visualizer-bar:nth-child(3) {
+            height: 12px;
+            animation-delay: 0.2s;
+        }
+
+        .visualizer-bar:nth-child(4) {
+            height: 22px;
+            animation-delay: 0.4s;
+        }
+
+        .visualizer-paused .visualizer-bar {
+            height: 4px !important;
+            animation: none !important;
+        }
+
+        @keyframes bounceBar {
+            0% {
+                height: 4px;
+            }
+
+            100% {
+                height: 22px;
+            }
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-accent);
+            border-radius: 3px;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ambient Background Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            html,
+            body {
+                background: #fff !important;
+                color: #1a1a1a !important;
+                font-size: 13pt;
+                margin: 0;
+                padding: 0;
+            }
+
+            #bg-canvas {
+                display: none !important;
+            }
+
+            main {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .glass-card {
+                background: #fdf8f0 !important;
+                border: 1px solid #c8a951 !important;
+                color: #1a1a1a !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            .gold-shimmer {
+                background: none !important;
+                -webkit-text-fill-color: #7a5c00 !important;
+                color: #7a5c00 !important;
+                animation: none !important;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            p,
+            span,
+            a {
+                color: #1a1a1a !important;
+            }
+
+            .text-amber-200,
+            .text-amber-300,
+            .text-rose-200\/80,
+            .text-rose-100\/70,
+            .text-rose-100\/80 {
+                color: #5c4500 !important;
+            }
+
+            footer {
+                color: #666 !important;
+                border-color: #ccc !important;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+
+            #countdown {
+                border: 1px solid #c8a951 !important;
+            }
+
+            #countdown span {
+                color: #7a5c00 !important;
+            }
+
+            iframe {
+                display: none !important;
+            }
+
+            .animate-float,
+            .animate-pulse,
+            .pulse-ring {
+                animation: none !important;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════
+           ENVELOPE INTRO OVERLAY
+        ═══════════════════════════════════════════════ */
+        #envelope-intro {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: radial-gradient(ellipse at 50% 38%, #22093a 0%, #0d0520 52%, #040110 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 1.3s ease;
+        }
+        #envelope-intro.env-hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Stars */
+        .env-star {
+            position: absolute;
+            border-radius: 50%;
+            background: #fff;
+            pointer-events: none;
+            animation: envTwinkle var(--d,3s) ease-in-out var(--dl,0s) infinite alternate;
+        }
+        @keyframes envTwinkle {
+            0%  { opacity: 0.06; transform: scale(0.7); }
+            100%{ opacity: 0.92; transform: scale(1.4); }
+        }
+
+        /* Rose petals */
+        .env-petal {
+            position: absolute;
+            border-radius: 60% 40% 60% 40%;
+            pointer-events: none;
+            background: rgba(232,136,156,0.5);
+            animation: envPetal var(--d2,9s) linear var(--dl2,0s) infinite;
+        }
+        @keyframes envPetal {
+            0%   { transform: translateY(-30px) translateX(0) rotate(0deg);   opacity:0; }
+            6%   { opacity: 0.5; }
+            94%  { opacity: 0.35; }
+            100% { transform: translateY(108vh) translateX(var(--dx,30px)) rotate(880deg); opacity:0; }
+        }
+
+        /* Scene */
+        #env-scene {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            width: 100%;
+            padding: 16px;
+        }
+
+        /* Top label */
+        #env-top-label {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(8px,1.9vw,11.5px);
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: rgba(212,175,55,0.82);
+            text-align: center;
+            opacity: 0;
+            animation: envFadeUp 1s ease 0.55s forwards;
+        }
+        @keyframes envFadeUp {
+            from { opacity:0; transform:translateY(14px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        /* Outer wrapper (perspective) */
+        #env-wrapper {
+            position: relative;
+            width: clamp(280px,88vw,420px);
+            perspective: 1100px;
+            opacity: 0;
+            animation: envWrapIn 1.1s cubic-bezier(0.16,1,0.3,1) 0.9s forwards;
+        }
+        @keyframes envWrapIn {
+            from { opacity:0; transform:scale(0.68) translateY(32px); }
+            to   { opacity:1; transform:scale(1)   translateY(0); }
+        }
+
+        /* ——— Inner invitation letter card ——— */
+        #env-letter {
+            position: relative;
+            z-index: 5;
+            background: linear-gradient(162deg,#fffef8 0%,#fff9ed 50%,#fef4de 100%);
+            border: 1px solid rgba(212,175,55,0.28);
+            border-radius: 3px;
+            padding: clamp(18px,4.5vw,30px) clamp(16px,4vw,26px);
+            text-align: center;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: none;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.14);
+        }
+        #env-letter.letter-open {
+            max-height: 700px;
+            opacity: 1;
+            transition: max-height 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s,
+                        opacity 0.65s ease 0.5s;
+        }
+        #env-letter::before {
+            content:'';
+            position:absolute;
+            inset:9px;
+            border:1px solid rgba(212,175,55,0.17);
+            border-radius:1px;
+            pointer-events:none;
+        }
+        .elc-diamond { position:absolute; font-size:9px; color:rgba(212,175,55,0.38); }
+        .elc-diamond.tl{ top:14px;  left:14px; }
+        .elc-diamond.tr{ top:14px;  right:14px; }
+        .elc-diamond.bl{ bottom:14px; left:14px; }
+        .elc-diamond.br{ bottom:14px; right:14px; }
+
+        .elc-tagline {
+            font-family:'Cinzel Decorative',serif;
+            font-size:clamp(6.5px,1.5vw,8.5px);
+            letter-spacing:0.32em;
+            text-transform:uppercase;
+            color:#7a5f14;
+            margin-bottom:8px;
+        }
+        .elc-names {
+            font-family:'Alex Brush',cursive;
+            font-size:clamp(34px,9vw,56px);
+            line-height:1;
+            background:linear-gradient(90deg,#bf953f,#fcf6ba,#b38728,#fbf5b7,#aa771c,#bf953f);
+            background-size:200% auto;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            animation:shine 5s linear infinite;
+            margin-bottom:4px;
+        }
+        .elc-rule {
+            width:72px; height:1px;
+            background:linear-gradient(90deg,transparent,rgba(212,175,55,0.75),transparent);
+            margin:9px auto;
+        }
+        .elc-with {
+            font-family:'Cormorant Garamond',serif;
+            font-size:clamp(10px,2vw,13px);
+            color:rgba(107,79,18,0.72);
+            font-style:italic;
+            letter-spacing:0.22em;
+            margin-bottom:7px;
+        }
+        .elc-date {
+            font-family:'Cinzel Decorative',serif;
+            font-size:clamp(8px,1.9vw,11px);
+            color:#5c4510;
+            letter-spacing:0.22em;
+            margin-bottom:3px;
+        }
+        .elc-time {
+            font-family:'Cormorant Garamond',serif;
+            font-size:clamp(11px,2.5vw,15px);
+            color:rgba(107,79,18,0.8);
+            font-style:italic;
+            margin-bottom:3px;
+        }
+        .elc-venue {
+            font-family:'Cormorant Garamond',serif;
+            font-size:clamp(11px,2.4vw,14px);
+            color:#7a5c16;
+            font-style:italic;
+            margin-bottom:17px;
+        }
+        #env-enter-btn {
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            background:linear-gradient(135deg,#d4af37 0%,#c09b1a 50%,#b8860b 100%);
+            color:#1a0800;
+            border:none;
+            padding:clamp(9px,2.2vw,12px) clamp(22px,5.5vw,32px);
+            border-radius:50px;
+            font-family:'Cinzel Decorative',serif;
+            font-size:clamp(7.5px,1.8vw,10px);
+            letter-spacing:0.2em;
+            font-weight:700;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            box-shadow:0 5px 24px rgba(212,175,55,0.5), 0 2px 8px rgba(0,0,0,0.3);
+            position:relative;
+            overflow:hidden;
+        }
+        #env-enter-btn::after {
+            content:'';
+            position:absolute;
+            top:0; left:-110%;
+            width:60%; height:100%;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.32),transparent);
+            transition:left 0.55s ease;
+        }
+        #env-enter-btn:hover::after { left:150%; }
+        #env-enter-btn:hover {
+            transform:translateY(-2px);
+            box-shadow:0 8px 32px rgba(212,175,55,0.7), 0 4px 12px rgba(0,0,0,0.3);
+        }
+        #env-enter-btn:active { transform:scale(0.97); }
+
+        /* ——— Envelope graphic ——— */
+        #env-envelope {
+            position:relative;
+            width:100%;
+            padding-top: clamp(84px,21vw,116px);
+            animation:envBob 4.2s ease-in-out 2.2s infinite;
+        }
+        #env-envelope.env-opening { animation:none; }
+
+        @keyframes envBob {
+            0%,100%{ transform:translateY(0)    rotate(-0.4deg); }
+            50%    { transform:translateY(-10px) rotate( 0.4deg); }
+        }
+
+        /* Flap */
+        #env-flap {
+            position:absolute;
+            top:0; left:0;
+            width:100%;
+            height: clamp(84px,21vw,116px);
+            background:linear-gradient(168deg,#e2c55f 0%,#d4a824 38%,#bf9318 100%);
+            clip-path:polygon(0 0,100% 0,50% 100%);
+            transform-origin:top center;
+            transform:rotateX(0deg);
+            transition:transform 0.9s cubic-bezier(0.4,0,0.2,1);
+            backface-visibility:hidden;
+            z-index:12;
+        }
+        #env-flap::before {
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(168deg,rgba(255,255,255,0.14) 0%,transparent 55%);
+            clip-path:polygon(0 0,100% 0,50% 100%);
+        }
+        #env-envelope.env-opening #env-flap {
+            transform:rotateX(-180deg);
+        }
+
+        /* Envelope body */
+        #env-body {
+            position:relative;
+            width:100%;
+            height:clamp(148px,37vw,206px);
+            background:linear-gradient(158deg,#e5c860 0%,#d4a926 32%,#bf9018 68%,#cca830 100%);
+            border-radius:3px;
+            box-shadow:0 18px 55px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,55,0.38), inset 0 1px 0 rgba(255,255,255,0.13);
+            overflow:hidden;
+            z-index:10;
+        }
+        #env-body::before {
+            content:'';
+            position:absolute;
+            bottom:0; left:0;
+            width:100%; height:65%;
+            background:
+                linear-gradient(to top-right,rgba(0,0,0,0.065) 50%,transparent 50%),
+                linear-gradient(to top-left, rgba(0,0,0,0.065) 50%,transparent 50%);
+            pointer-events:none;
+        }
+        #env-body::after {
+            content:'';
+            position:absolute;
+            inset:7px;
+            border:1px dashed rgba(255,255,255,0.11);
+            pointer-events:none;
+        }
+
+        /* Wax seal */
+        #env-seal {
+            position:absolute;
+            top: clamp(68px,17vw,96px);
+            left:50%;
+            transform:translateX(-50%) translateY(-50%);
+            width: clamp(56px,14vw,74px);
+            height:clamp(56px,14vw,74px);
+            background:radial-gradient(circle at 35% 35%,#f26666,#c01c1c,#8b0000);
+            border-radius:50%;
+            border:2px solid rgba(255,195,155,0.38);
+            box-shadow:0 5px 24px rgba(170,0,0,0.7), 0 0 42px rgba(170,0,0,0.28), inset 0 1px 0 rgba(255,165,165,0.3);
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+            z-index:30;
+            transition:transform 0.38s ease, opacity 0.38s ease, box-shadow 0.3s ease;
+            animation:sealGlow 2.6s ease-in-out 2.2s infinite alternate;
+        }
+        @keyframes sealGlow {
+            0%  { box-shadow:0 5px 24px rgba(170,0,0,0.7), 0 0 32px rgba(170,0,0,0.22); }
+            100%{ box-shadow:0 6px 30px rgba(210,0,0,0.9), 0 0 58px rgba(180,0,0,0.42); }
+        }
+        #env-seal::after {
+            content:'';
+            position:absolute;
+            inset:5px;
+            border-radius:50%;
+            border:1px solid rgba(255,195,155,0.2);
+        }
+        #env-seal:hover {
+            transform:translateX(-50%) translateY(-50%) scale(1.09);
+            box-shadow:0 8px 34px rgba(210,0,0,0.85), 0 0 65px rgba(180,0,0,0.42);
+        }
+        #env-seal.seal-pop {
+            transform:translateX(-50%) translateY(-50%) scale(0) !important;
+            opacity:0;
+        }
+        .env-seal-icon  { font-size:clamp(7px,1.6vw,9px); color:rgba(255,220,200,0.72); margin-bottom:1px; }
+        .env-seal-label {
+            font-family:'Cinzel Decorative',serif;
+            font-size:clamp(9px,2.1vw,12px);
+            color:rgba(255,235,215,0.96);
+            font-weight:700;
+            letter-spacing:0.04em;
+            text-shadow:0 1px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Hint text */
+        #env-hint {
+            font-family:'Cormorant Garamond',serif;
+            font-size:clamp(11px,2.5vw,14px);
+            letter-spacing:0.24em;
+            color:rgba(212,175,55,0.65);
+            font-style:italic;
+            text-align:center;
+            opacity:0;
+            animation:envFadeUp 0.8s ease 2.5s forwards;
+            transition:opacity 0.4s ease;
+        }
+        #env-hint.hint-gone { opacity:0 !important; pointer-events:none; }
+
+        /* Sparkles on open */
+        .env-spark {
+            position:absolute;
+            border-radius:50%;
+            pointer-events:none;
+            z-index:60;
+            animation:envSparkFly var(--dur,0.8s) ease-out forwards;
+        }
+        @keyframes envSparkFly {
+            0%  { transform:translate(0,0) scale(1.2); opacity:1; }
+            100%{ transform:translate(var(--tx,0),var(--ty,-90px)) scale(0); opacity:0; }
+        }
+    </style>
+</head>
+
+<body class="theme-gold relative min-h-screen text-rose-50 selection:bg-rose-900 selection:text-amber-200 antialiased">
+
+    <!-- ═══════════════════════════════════════
+         ANIMATED ENVELOPE INTRO OVERLAY
+    ═══════════════════════════════════════ -->
+    <div id="envelope-intro">
+        <!-- JS-generated stars & petals go here -->
+        <div id="env-bg-fx"></div>
+
+        <div id="env-scene">
+
+            <!-- Top label -->
+            <p id="env-top-label">✦ &nbsp; You Are Cordially Invited &nbsp; ✦</p>
+
+            <!-- Envelope + Card wrapper -->
+            <div id="env-wrapper">
+
+                <!-- Invitation card (rises from inside envelope) -->
+                <div id="env-letter">
+                    <span class="elc-diamond tl">✦</span>
+                    <span class="elc-diamond tr">✦</span>
+                    <span class="elc-diamond bl">✦</span>
+                    <span class="elc-diamond br">✦</span>
+
+                    <p class="elc-tagline">Together With Their Families</p>
+                    <h2 class="elc-names">Jobin &amp; Angel</h2>
+                    <div class="elc-rule"></div>
+                    <p class="elc-with">request the honour of your presence</p>
+                    <p class="elc-date">Monday &nbsp;•&nbsp; January 4, 2027</p>
+                    <p class="elc-time">Holy Matrimony at 11 AM</p>
+                    <p class="elc-venue">St. Mary's Cathedral &nbsp;&amp;&nbsp; Mg Auditorium, Thumpamon</p>
+
+                    <button id="env-enter-btn" onclick="enterSite()">
+                        <i class="fas fa-envelope-open-text"></i>
+                        Open Invitation
+                    </button>
+                </div>
+
+                <!-- The envelope graphic -->
+                <div id="env-envelope">
+                    <!-- Triangular top flap (3D-rotates open) -->
+                    <div id="env-flap"></div>
+
+                    <!-- Wax seal (clickable) -->
+                    <div id="env-seal" onclick="openEnvelope()" title="Tap to open">
+                        <i class="fas fa-heart env-seal-icon"></i>
+                        <span class="env-seal-label">J&amp;A</span>
+                    </div>
+
+                    <!-- Envelope body -->
+                    <div id="env-body"></div>
+                </div>
+
+            </div><!-- /env-wrapper -->
+
+            <!-- Hint text -->
+            <p id="env-hint">✦ &nbsp; Tap the seal to open &nbsp; ✦</p>
+
+        </div><!-- /env-scene -->
+    </div><!-- /envelope-intro -->
+
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation Header Bar -->
+    <header
+        class="no-print fixed top-0 left-0 w-full z-40 bg-black/50 backdrop-blur-xl border-b border-white/10 px-4 py-2.5 sm:py-3 transition-all duration-300 pt-safe">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+
+            <!-- Logo / Initials -->
+            <a href="#hero" class="font-calligraphy text-2xl sm:text-3xl gold-shimmer font-bold tracking-wide">
+                <span id="nav-initials">J & A</span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav
+                class="hidden md:flex items-center space-x-6 text-xs font-medium tracking-[0.2em] uppercase text-rose-200/80">
+                <a href="#hero" class="hover:text-amber-300 transition-colors">Home</a>
+                <a href="#schedule" class="hover:text-amber-300 transition-colors">Schedule</a>
+                <a href="#venue" class="hover:text-amber-300 transition-colors">Location</a>
+            </nav>
+
+            <!-- Action Controls: Audio, Admin Security Lock & Customizer -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Music Audio Toggle Button -->
+                <button onclick="toggleAudio()"
+                    class="flex items-center space-x-2 bg-black/40 border border-amber-500/30 min-h-[44px] px-3 sm:px-4 py-2 rounded-full hover:border-amber-400 active:scale-95 transition group shadow-lg"
+                    title="Toggle Music">
+                    <div id="audio-visualizer" class="flex items-center space-x-1 h-5 visualizer-paused">
+                        <div class="visualizer-bar"></div>
+                        <div class="visualizer-bar"></div>
+                        <div class="visualizer-bar"></div>
+                        <div class="visualizer-bar"></div>
+                    </div>
+                    <span id="audio-status-text"
+                        class="text-[11px] tracking-wider uppercase text-amber-200/90 font-medium hidden sm:inline">Play
+                        Sound</span>
+                </button>
+
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main
+        class="relative z-10 pt-20 sm:pt-24 pb-28 sm:pb-20 px-4 sm:px-6 md:px-8 max-w-5xl mx-auto space-y-16 sm:space-y-24">
+
+        <!-- Hero Section -->
+        <section id="hero"
+            class="min-h-[80dvh] sm:min-h-[85vh] flex flex-col items-center justify-center text-center relative py-6 sm:py-12">
+
+            <!-- Personalized Guest Welcome Banner -->
+            <div id="personalized-welcome-banner"
+                class="hidden mb-4 px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-200 text-xs tracking-widest uppercase">
+                Welcome <span id="guest-personalized-name" class="font-bold text-amber-300">Dearest Guest</span>!
+            </div>
+
+            <!-- Heart Icon -->
+            <div class="relative mb-4 sm:mb-6 animate-float">
+                <div
+                    class="w-20 h-20 sm:w-28 sm:h-28 rounded-full border border-amber-400/40 flex items-center justify-center p-2 pulse-ring bg-rose-950/20 backdrop-blur-md">
+                    <div class="w-full h-full rounded-full border border-rose-300/30 flex items-center justify-center">
+                        <i
+                            class="fas fa-heart-pulse text-2xl sm:text-4xl text-amber-300/90 filter drop-shadow-[0_0_10px_rgba(212,175,55,0.6)]"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tagline -->
+            <p id="preview-tagline"
+                class="font-cinzel text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] text-amber-300/90 uppercase mb-2 sm:mb-4 reveal-on-scroll is-visible">
+                Together With Their Families
+            </p>
+
+            <!-- Couple Names -->
+            <h1 id="preview-names"
+                class="font-calligraphy text-5xl sm:text-7xl md:text-8xl lg:text-9xl gold-shimmer py-2 sm:py-3 mb-2 filter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] leading-tight reveal-on-scroll is-visible">
+                Jobin & Angel
+            </h1>
+
+            <p
+                class="font-subheading italic text-base sm:text-2xl text-rose-200/90 max-w-xl sm:max-w-2xl px-2 mb-4 reveal-on-scroll is-visible">
+                Invite you to celebrate their union of everlasting love and commitment
+            </p>
+            <div
+                class="font-body text-rose-200/80 text-sm sm:text-lg space-y-3 mb-6 sm:mb-8 reveal-on-scroll is-visible max-w-2xl px-4 mx-auto">
+                <p><strong class="gold-shimmer text-xl sm:text-2xl font-subheading block mb-1">Jobin Jose</strong>Son of
+                    Mr. Jose K. G & Mrs. Kunjumol Jose</p>
+                <p class="italic font-subheading text-amber-300">with</p>
+                <p><strong class="gold-shimmer text-xl sm:text-2xl font-subheading block mb-1">Angel Eliza
+                        Sunny</strong>Daughter of Mr. Sunny P. Chacko & Mrs. Elizabeth Sunny</p>
+            </div>
+
+            <!-- Couple Photo Frame -->
+            <div
+                class="relative my-4 sm:my-6 max-w-[240px] sm:max-w-xs md:max-w-sm mx-auto reveal-on-scroll is-visible">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-amber-500 via-rose-400 to-amber-300 rounded-full blur-md opacity-40 animate-pulse">
+                </div>
+                <div
+                    class="relative rounded-full p-1.5 sm:p-2 bg-gradient-to-tr from-amber-400/80 to-rose-900 border border-amber-300/50 shadow-2xl overflow-hidden">
+                    <img id="preview-hero-img"
+                        src="couple.jpg"
+                        alt="Jobin & Angel"
+                        class="w-48 h-48 sm:w-64 sm:h-64 object-cover rounded-full filter brightness-95 hover:scale-105 transition-transform duration-700"
+                        style="object-position: center 20%;">
+                </div>
+            </div>
+
+            <!-- Date & Time Card -->
+            <div class="mt-4 sm:mt-8 space-y-2 sm:space-y-3 px-2 reveal-on-scroll is-visible">
+                <div
+                    class="inline-block px-5 sm:px-8 py-2.5 sm:py-3 rounded-full glass-card border border-amber-400/30">
+                    <span id="preview-date-display"
+                        class="font-cinzel text-sm sm:text-2xl tracking-[0.18em] sm:tracking-[0.25em] text-amber-200 font-bold uppercase">
+                        Monday, January 4, 2027
+                    </span>
+                </div>
+                <p id="preview-time-display"
+                    class="font-body text-base sm:text-xl text-rose-200/80 tracking-widest uppercase">
+                    11 AM
+                </p>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div
+                class="mt-8 sm:mt-12 w-full max-w-lg glass-card rounded-2xl p-4 sm:p-8 border border-amber-400/20 shadow-2xl reveal-on-scroll is-visible">
+                <p
+                    class="font-cinzel text-[10px] sm:text-xs tracking-[0.25em] uppercase text-amber-300/80 mb-4 sm:mb-6 text-center">
+                    Counting Down To Forever</p>
+                <div id="countdown" class="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+                    <div class="bg-black/40 p-2.5 sm:p-4 rounded-xl border border-amber-500/20 shadow-inner">
+                        <span id="days"
+                            class="block font-subheading text-2xl sm:text-4xl font-bold text-amber-300">00</span>
+                        <span
+                            class="text-[9px] sm:text-xs tracking-widest uppercase text-rose-200/60 mt-1 block">Days</span>
+                    </div>
+                    <div class="bg-black/40 p-2.5 sm:p-4 rounded-xl border border-amber-500/20 shadow-inner">
+                        <span id="hours"
+                            class="block font-subheading text-2xl sm:text-4xl font-bold text-amber-300">00</span>
+                        <span
+                            class="text-[9px] sm:text-xs tracking-widest uppercase text-rose-200/60 mt-1 block">Hours</span>
+                    </div>
+                    <div class="bg-black/40 p-2.5 sm:p-4 rounded-xl border border-amber-500/20 shadow-inner">
+                        <span id="minutes"
+                            class="block font-subheading text-2xl sm:text-4xl font-bold text-amber-300">00</span>
+                        <span
+                            class="text-[9px] sm:text-xs tracking-widest uppercase text-rose-200/60 mt-1 block">Mins</span>
+                    </div>
+                    <div class="bg-black/40 p-2.5 sm:p-4 rounded-xl border border-amber-500/20 shadow-inner">
+                        <span id="seconds"
+                            class="block font-subheading text-2xl sm:text-4xl font-bold text-amber-300">00</span>
+                        <span
+                            class="text-[9px] sm:text-xs tracking-widest uppercase text-rose-200/60 mt-1 block">Secs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Buttons -->
+            <div class="mt-6 sm:mt-8 flex flex-wrap justify-center gap-3 no-print reveal-on-scroll is-visible">
+                <a id="gcal-btn" href="#" target="_blank"
+                    class="glass-card hover:bg-amber-500/20 text-amber-200 min-h-[44px] px-5 py-2.5 rounded-full text-[11px] sm:text-xs font-semibold tracking-widest uppercase transition-all duration-300 border border-amber-400/40 flex items-center space-x-2 shadow-lg active:scale-95">
+                    <i class="far fa-calendar-check text-amber-400"></i>
+                    <span>Add to Google Calendar</span>
+                </a>
+                <button onclick="downloadICS()"
+                    class="glass-card hover:bg-amber-500/20 text-amber-200 min-h-[44px] px-5 py-2.5 rounded-full text-[11px] sm:text-xs font-semibold tracking-widest uppercase transition-all duration-300 border border-amber-400/40 flex items-center space-x-2 shadow-lg active:scale-95">
+                    <i class="fas fa-file-arrow-down text-amber-400"></i>
+                    <span>Download .ICS Calendar</span>
+                </button>
+            </div>
+        </section>
+
+
+
+        <!-- Event Schedule Section -->
+        <section id="schedule" class="py-8 sm:py-12 reveal-on-scroll">
+            <div class="text-center mb-10 sm:mb-16">
+                <span class="font-calligraphy text-3xl sm:text-5xl text-rose-300 block mb-1">Celebration Details</span>
+                <h2 class="font-cinzel text-lg sm:text-2xl tracking-[0.2em] text-amber-200 uppercase">Wedding Itinerary
+                </h2>
+                <div
+                    class="w-20 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mt-3">
+                </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
+                <div class="glass-card glass-card-hover rounded-2xl p-5 sm:p-6 text-center border border-amber-400/20">
+                    <div
+                        class="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-tr from-amber-500/20 to-rose-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-lg sm:text-xl">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <span
+                        class="font-cinzel text-[11px] sm:text-xs text-amber-300 tracking-widest uppercase block mb-1">Holy
+                        Matrimony</span>
+                    <h3 class="font-subheading text-lg sm:text-xl font-bold text-amber-100 mb-2">St. Mary's Orthodox
+                        Syrian Cathedral</h3>
+                    <p class="text-rose-100/70 text-xs sm:text-sm">Thumpamon</p>
+                </div>
+
+                <div class="glass-card glass-card-hover rounded-2xl p-5 sm:p-6 text-center border border-amber-400/20">
+                    <div
+                        class="w-12 h-12 sm:w-14 sm:h-14 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-tr from-amber-500/20 to-rose-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-lg sm:text-xl">
+                        <i class="fas fa-glass-cheers"></i>
+                    </div>
+                    <span
+                        class="font-cinzel text-[11px] sm:text-xs text-amber-300 tracking-widest uppercase block mb-1">Reception</span>
+                    <h3 class="font-subheading text-lg sm:text-xl font-bold text-amber-100 mb-2">Mg Auditorium</h3>
+                    <p class="text-rose-100/70 text-xs sm:text-sm">Thumpamon</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location & Map Section -->
+        <section id="venue" class="py-8 sm:py-12 reveal-on-scroll">
+            <div class="text-center mb-10 sm:mb-12">
+                <span class="font-calligraphy text-3xl sm:text-5xl text-rose-300 block mb-1">The Setting</span>
+                <h2 class="font-cinzel text-lg sm:text-2xl tracking-[0.2em] text-amber-200 uppercase">Venue & Directions
+                </h2>
+                <div
+                    class="w-20 sm:w-24 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mt-3">
+                </div>
+            </div>
+
+            <div
+                class="glass-card rounded-2xl p-5 sm:p-8 border border-amber-400/20 grid md:grid-cols-2 gap-6 sm:gap-8 items-center shadow-2xl">
+                <div class="space-y-3 sm:space-y-4">
+                    <h3 id="preview-venue-name" class="font-subheading text-2xl sm:text-3xl font-bold text-amber-200">Mg
+                        Auditorium</h3>
+                    <p id="preview-address" class="text-rose-100/80 text-base sm:text-lg leading-relaxed">
+                        Thumpamon, Kerala
+                    </p>
+
+                    <div class="pt-2 space-y-2 text-xs sm:text-sm text-rose-200/70">
+                        <p><i class="fas fa-parking text-amber-400 mr-2"></i> Parking available on CHURCH GROUND.</p>
+                    </div>
+
+                    <div class="pt-3 no-print flex flex-wrap gap-3">
+                        <a id="map-directions-btn"
+                            href="https://www.google.com/maps/search/?api=1&query=Mg+Auditorium+Thumpamon"
+                            target="_blank"
+                            class="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-rose-950 min-h-[44px] px-5 sm:px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg flex items-center space-x-2 active:scale-95">
+                            <i class="fas fa-location-arrow"></i>
+                            <span>Open in Maps</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Map Iframe -->
+                <div
+                    class="relative w-full h-56 sm:h-72 md:h-80 rounded-xl overflow-hidden border border-amber-400/30 shadow-inner">
+                    <iframe id="google-map-iframe"
+                        class="w-full h-full border-0 filter opacity-90 hover:opacity-100 transition-opacity"
+                        loading="lazy" allowfullscreen
+                        src="https://maps.google.com/maps?q=Mg%20Auditorium%20Thumpamon&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Utility Action Toolbar -->
+        <section class="py-6 text-center space-y-4 no-print reveal-on-scroll">
+            <!-- WhatsApp RSVP - Two choice buttons -->
+            <div class="glass-card rounded-2xl p-4 sm:p-6 border border-amber-400/20 max-w-md mx-auto mb-2">
+                <p class="font-cinzel text-[10px] sm:text-xs tracking-[0.2em] uppercase text-amber-300/80 mb-3">RSVP via
+                    WhatsApp</p>
+                <p class="font-body text-sm sm:text-base text-rose-200/80 mb-4">Will you be joining us on our special
+                    day?</p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="https://wa.me/?text=Hello%20Jobin%20%26%20Angel!%20%F0%9F%8E%89%20I%20am%20ATTENDING%20your%20wedding%20on%20January%204%2C%202027.%20Congratulations%20and%20looking%20forward%20to%20celebrating%20with%20you!"
+                        target="_blank"
+                        class="flex items-center space-x-2 bg-green-600 hover:bg-green-500 text-white min-h-[44px] px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg border border-green-400/50 active:scale-95">
+                        <i class="fab fa-whatsapp text-white text-lg"></i>
+                        <span>✅ I Will Attend</span>
+                    </a>
+                    <a href="https://wa.me/?text=Hello%20Jobin%20%26%20Angel!%20%F0%9F%99%8F%20I%20am%20sadly%20UNABLE%20TO%20ATTEND%20your%20wedding%20on%20January%204%2C%202027.%20Wishing%20you%20both%20a%20lifetime%20of%20love%20and%20happiness!"
+                        target="_blank"
+                        class="flex items-center space-x-2 bg-rose-700 hover:bg-rose-600 text-white min-h-[44px] px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg border border-rose-400/50 active:scale-95">
+                        <i class="fab fa-whatsapp text-white text-lg"></i>
+                        <span>❌ Can't Attend</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="copyInvitationLink()"
+                    class="glass-card hover:bg-amber-500/20 text-amber-200 min-h-[44px] px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-widest transition-all border border-amber-400/40 shadow-lg flex items-center space-x-2 active:scale-95">
+                    <i class="fas fa-share-nodes text-amber-400"></i>
+                    <span>Share Link</span>
+                </button>
+                <button onclick="printInvitation()"
+                    class="glass-card hover:bg-amber-500/20 text-amber-200 min-h-[44px] px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-widest transition-all border border-amber-400/40 shadow-lg flex items-center space-x-2 active:scale-95">
+                    <i class="fas fa-print text-amber-400"></i>
+                    <span>Print / PDF</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer
+            class="pt-8 border-t border-amber-500/20 text-center text-[10px] sm:text-xs text-rose-200/50 font-cinzel uppercase tracking-widest">
+            <p>With Love & Joy • Jobin & Angel</p>
+        </footer>
+
+    </main>
+
+
+
+
+
+
+
+    <!-- Toast Notification Banner -->
+    <div id="toast-notification"
+        class="no-print fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-amber-400 text-rose-950 font-bold px-5 py-2.5 rounded-full text-xs uppercase tracking-widest shadow-2xl z-50 opacity-0 pointer-events-none transition-all duration-300">
+        Notification
+    </div>
+
+    <!-- Romantic Piano Background Music -->
+    <audio id="wedding-audio" loop>
+        <source
+            src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-romantic-piano-112199.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <script>
+        /* ═══════════════════════════════════════════════════
+           ENVELOPE INTRO — Stars, Petals, Open, Enter
+        ═══════════════════════════════════════════════════ */
+        (function initEnvelopeIntro() {
+            const bg = document.getElementById('env-bg-fx');
+
+            // — Generate twinkling stars —
+            for (let i = 0; i < 130; i++) {
+                const s = document.createElement('div');
+                s.className = 'env-star';
+                const sz = (Math.random() * 2.2 + 0.5).toFixed(1);
+                s.style.cssText =
+                    `width:${sz}px;height:${sz}px;` +
+                    `top:${(Math.random()*100).toFixed(1)}%;` +
+                    `left:${(Math.random()*100).toFixed(1)}%;` +
+                    `--d:${(Math.random()*3+1.5).toFixed(1)}s;` +
+                    `--dl:${(Math.random()*3).toFixed(1)}s;`;
+                bg.appendChild(s);
+            }
+
+            // — Generate floating rose petals —
+            for (let i = 0; i < 18; i++) {
+                const p = document.createElement('div');
+                p.className = 'env-petal';
+                const w = (Math.random()*8+5).toFixed(0);
+                const h = (Math.random()*10+7).toFixed(0);
+                const dx = (Math.random()*80 - 40).toFixed(0);
+                p.style.cssText =
+                    `width:${w}px;height:${h}px;` +
+                    `left:${(Math.random()*100).toFixed(1)}%;` +
+                    `top:${-(Math.random()*20+5).toFixed(0)}px;` +
+                    `--d2:${(Math.random()*8+7).toFixed(1)}s;` +
+                    `--dl2:${(Math.random()*8).toFixed(1)}s;` +
+                    `--dx:${dx}px;` +
+                    `transform:rotate(${(Math.random()*360).toFixed(0)}deg);`;
+                bg.appendChild(p);
+            }
+        })();
+
+        let envelopeOpened = false;
+
+        function openEnvelope() {
+            if (envelopeOpened) return;
+            envelopeOpened = true;
+
+            const env   = document.getElementById('env-envelope');
+            const seal  = document.getElementById('env-seal');
+            const hint  = document.getElementById('env-hint');
+            const letter = document.getElementById('env-letter');
+
+            // hide hint & pop seal
+            hint.classList.add('hint-gone');
+            seal.classList.add('seal-pop');
+
+            // stop bob, start opening
+            env.classList.add('env-opening');
+
+            // fire sparkles from seal position
+            fireSparkles();
+
+            // after flap rotates, open the letter card
+            setTimeout(() => {
+                letter.classList.add('letter-open');
+            }, 700);
+        }
+
+        function fireSparkles() {
+            const wrap = document.getElementById('env-wrapper');
+            const colors = ['#d4af37','#fcf6ba','#e8889c','#ffffff','#f43f5e','#fbbf24'];
+            for (let i = 0; i < 28; i++) {
+                setTimeout(() => {
+                    const sp = document.createElement('div');
+                    sp.className = 'env-spark';
+                    const angle = Math.random() * 360;
+                    const dist  = Math.random() * 130 + 55;
+                    const size  = (Math.random() * 7 + 3).toFixed(0);
+                    sp.style.cssText =
+                        `left:50%;top:60%;` +
+                        `width:${size}px;height:${size}px;` +
+                        `background:${colors[Math.floor(Math.random()*colors.length)]};` +
+                        `--tx:${(Math.cos(angle*Math.PI/180)*dist).toFixed(0)}px;` +
+                        `--ty:${(Math.sin(angle*Math.PI/180)*dist).toFixed(0)}px;` +
+                        `--dur:${(Math.random()*0.6+0.5).toFixed(2)}s;`;
+                    wrap.appendChild(sp);
+                    setTimeout(() => sp.remove(), 1200);
+                }, i * 35);
+            }
+        }
+
+        function enterSite() {
+            // Confetti burst
+            if (typeof confetti !== 'undefined') {
+                confetti({ particleCount: 100, spread: 80, origin: { y: 0.55 },
+                    colors: ['#d4af37','#f43f5e','#ffffff','#fcf6ba','#e8889c'] });
+                setTimeout(() => confetti({ particleCount: 60, spread: 100,
+                    origin: { x: 0.1, y: 0.6 }, colors: ['#d4af37','#fff','#e8889c'] }), 300);
+                setTimeout(() => confetti({ particleCount: 60, spread: 100,
+                    origin: { x: 0.9, y: 0.6 }, colors: ['#d4af37','#fff','#f43f5e'] }), 500);
+            }
+
+            // Fade out overlay
+            const intro = document.getElementById('envelope-intro');
+            intro.classList.add('env-hide');
+            setTimeout(() => { intro.style.display = 'none'; }, 1400);
+        }
+
+        // Also allow clicking anywhere on the envelope body to open
+        document.getElementById('env-envelope').addEventListener('click', function(e) {
+            if (!envelopeOpened) openEnvelope();
+        });
+
+        // Application State with Local Storage Persistence
+        const state = {
+            names: "Jobin & Angel",
+            date: "2027-01-04",
+            venue: "Mg Auditorium, Thumpamon",
+            isPlayingAudio: false
+        };
+
+        window.onload = function () {
+            initBackgroundCanvas();
+            initScrollReveal();
+            startCountdown();
+            updateGoogleCalendarLink();
+            checkPersonalizedGuestName();
+        };
+
+        // Scroll Intersection Observer
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.08 });
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        }
+
+
+
+        function checkPersonalizedGuestName() {
+            const params = new URLSearchParams(window.location.search);
+            const guest = params.get('guest');
+            if (guest) {
+                document.getElementById('guest-personalized-name').innerText = guest;
+                document.getElementById('personalized-welcome-banner').classList.remove('hidden');
+            }
+        }
+
+        // Countdown Timer Logic
+        function startCountdown() {
+            function updateTimer() {
+                const target = new Date(state.date + 'T16:00:00').getTime();
+                const now = new Date().getTime();
+                const diff = target - now;
+
+                if (diff < 0) {
+                    document.getElementById('countdown').innerHTML = `<div class="col-span-4 text-center font-subheading text-xl sm:text-2xl text-amber-300">The Celebration is Here!</div>`;
+                    return;
+                }
+
+                document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+            }
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        // Calendar Sync
+        function updateGoogleCalendarLink() {
+            const startDate = state.date.replace(/-/g, '') + 'T160000Z';
+            const endDate = state.date.replace(/-/g, '') + 'T230000Z';
+            const title = encodeURIComponent(`Wedding: ${state.names}`);
+            const details = encodeURIComponent(`Wedding Celebration of ${state.names}`);
+            const location = encodeURIComponent(state.venue);
+
+            document.getElementById('gcal-btn').href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}&location=${location}`;
+        }
+
+        function downloadICS() {
+            const icsData = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Wedding Invitation Suite//EN
+BEGIN:VEVENT
+SUMMARY:Wedding: ${state.names}
+DESCRIPTION:Celebration of ${state.names}
+LOCATION:${state.venue}
+DTSTART:${state.date.replace(/-/g, '')}T160000Z
+DTEND:${state.date.replace(/-/g, '')}T230000Z
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'wedding-event.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast(".ICS file downloaded!");
+        }
+
+        // Background Music Control
+        function toggleAudio() {
+            const audio = document.getElementById('wedding-audio');
+            const visualizer = document.getElementById('audio-visualizer');
+            const statusText = document.getElementById('audio-status-text');
+
+            if (state.isPlayingAudio) {
+                audio.pause();
+                visualizer.classList.add('visualizer-paused');
+                statusText.innerText = "Play Sound";
+                state.isPlayingAudio = false;
+                showToast("Music paused");
+            } else {
+                audio.play().then(() => {
+                    visualizer.classList.remove('visualizer-paused');
+                    statusText.innerText = "Playing";
+                    state.isPlayingAudio = true;
+                    showToast("Playing romantic soundtrack");
+                }).catch(() => {
+                    showToast("Tap again to play sound");
+                });
+            }
+        }
+
+
+
+        function printInvitation() {
+            // Temporarily stop canvas animation during print
+            const canvas = document.getElementById('bg-canvas');
+            if (canvas) canvas.style.display = 'none';
+            // Pause audio if playing
+            const audio = document.getElementById('wedding-audio');
+            if (audio && !audio.paused) audio.pause();
+            // Trigger print
+            window.print();
+            // Restore canvas after print dialog closes
+            setTimeout(() => {
+                if (canvas) canvas.style.display = '';
+            }, 500);
+        }
+
+        function copyInvitationLink() {
+            const tempInput = document.createElement('input');
+            document.body.appendChild(tempInput);
+            tempInput.value = window.location.href;
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast("Link copied to clipboard!");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            toast.innerText = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Floating Rose Petals & Mouse Touch Animation
+        function initBackgroundCanvas() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width, height;
+            let pointerX = -100, pointerY = -100;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const handlePointer = (e) => {
+                pointerX = e.touches ? e.touches[0].clientX : e.clientX;
+                pointerY = e.touches ? e.touches[0].clientY : e.clientY;
+            };
+
+            window.addEventListener('mousemove', handlePointer);
+            window.addEventListener('touchmove', handlePointer);
+
+            const petals = [];
+            const petalCount = window.innerWidth < 640 ? 20 : 35;
+
+            for (let i = 0; i < petalCount; i++) {
+                petals.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 7 + 5,
+                    speedY: Math.random() * 0.7 + 0.3,
+                    speedX: Math.random() * 0.4 - 0.2,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 1.2 - 0.6,
+                    opacity: Math.random() * 0.5 + 0.3
+                });
+            }
+
+            function drawPetal(p) {
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-p.size, -p.size, -p.size, p.size, 0, p.size * 1.5);
+                ctx.bezierCurveTo(p.size, p.size, p.size, -p.size, 0, 0);
+                ctx.fillStyle = `rgba(232, 136, 156, ${p.opacity})`;
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function render() {
+                ctx.clearRect(0, 0, width, height);
+
+                if (pointerX > 0 && pointerY > 0) {
+                    const gradient = ctx.createRadialGradient(pointerX, pointerY, 5, pointerX, pointerY, 140);
+                    gradient.addColorStop(0, 'rgba(232, 136, 156, 0.1)');
+                    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, width, height);
+                }
+
+                petals.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.rotation += p.rotationSpeed;
+
+                    const dx = pointerX - p.x;
+                    const dy = pointerY - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 80) {
+                        p.x -= (dx / dist) * 1.2;
+                        p.y -= (dy / dist) * 1.2;
+                    }
+
+                    if (p.y > height + 20) {
+                        p.y = -20;
+                        p.x = Math.random() * width;
+                    }
+                    drawPetal(p);
+                });
+
+                requestAnimationFrame(render);
+            }
+
+            render();
+        }
+    </script>
+</body>
+
+</html>
